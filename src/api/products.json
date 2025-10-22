@@ -65,7 +65,7 @@
     "discount":45
   },      
   {
-    "id": 6,
+    "id": 7,
     "name": "Television",
     "category": "Video",
     "brand": "Samsung",
@@ -76,7 +76,7 @@
     
   },
   {
-    "id": 6,
+    "id": 8,
     "name": "Television",
     "category": "Video",
     "brand": "Samsung",

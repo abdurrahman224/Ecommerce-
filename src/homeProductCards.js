@@ -1,3 +1,4 @@
+import { addToCard } from "./AddToCard";
 import { homeQuantityToggle } from "./homeQuantityToggle";
 
 const productTemplate = document.querySelector("#productTemplate");
@@ -23,6 +24,7 @@ export const showProductContainer = (products) => {
     const discountedPrice = discount ? price - (price * discount) / 100 : null;
 
     const productClone = document.importNode(productTemplate.content, true);
+    productClone.querySelector("#cardValue").setAttribute("id", `card${id}`);
     productClone.querySelector(".productName").textContent = name;
     if (discount) {
       productClone.querySelector(".category").textContent = `${discount}%`;
@@ -45,11 +47,17 @@ export const showProductContainer = (products) => {
       productClone.querySelector(".productPrice").textContent = `৳${price}`;
       productClone.querySelector(".productActualPrice").style.display = "none";
     }
-    productClone.querySelector('.stockElement').addEventListener("clike", (event) =>{
+    productClone
+      .querySelector(".stockElement")
+      .addEventListener("click", (event) => {
+        homeQuantityToggle(event, id, stock);
+      });
 
-
-      homeQuantityToggle(event,id,stock)
-    })
+    productClone
+      .querySelector(".add-to-cart-button")
+      .addEventListener("click", (event) => {
+        addToCard(event, id, stock);
+      });
 
     productContainer.append(productClone);
   });
