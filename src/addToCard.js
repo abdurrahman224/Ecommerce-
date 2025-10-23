@@ -5,6 +5,7 @@ getCartProductFromLS();
 
 export const addToCard = (event, id, stock) => {
   let arrLocalStorageProduct = getCartProductFromLS() || [];
+  
   const currentprodElem = document.querySelector(`#card${id}`);
   if (!currentprodElem) return;
   // console.log(arrLocalStorageProduct);
@@ -17,7 +18,7 @@ export const addToCard = (event, id, stock) => {
   // console.log(quantity,price);
   price = price.replace("৳", "");
   let existingProd = arrLocalStorageProduct.find((curProd) => {
-    console.log(curProd);
+ 
     return curProd.id === id;
   });
 
