@@ -1,22 +1,35 @@
 import { getCartProductFromLS } from "./getCartProduct";
-const arrLocalStorageProduct = getCartProductFromLS()
+import { updateCartValue } from "./updateCartValue";
 
-export const addToCard = (event, id, stock)=>{
+getCartProductFromLS();
 
-const currentprodElem = document.querySelector(`#card${id}`)
-// console.log(arrLocalStorageProduct);
+export const addToCard = (event, id, stock) => {
+  let arrLocalStorageProduct = getCartProductFromLS() || [];
+  const currentprodElem = document.querySelector(`#card${id}`);
+  if (!currentprodElem) return;
+  // console.log(arrLocalStorageProduct);
 
-// console.log(currentprodElem);
+  // console.log(currentprodElem);
+  let quantity = Number(
+    currentprodElem.querySelector(".productQuantity").innerText
+  );
+  let price = currentprodElem.querySelector(".productPrice").innerText;
+  // console.log(quantity,price);
+  price = price.replace("৳", "");
+  let existingProd = arrLocalStorageProduct.find((curProd) => {
+    console.log(curProd);
+    return curProd.id === id;
+  });
 
-let quantity = currentprodElem.querySelector('.productQuantity').innerText;
-let price = currentprodElem.querySelector('.productPrice').innerText;
-console.log(quantity,price);
-price = price.replace("৳" , "") 
-price = parseFloat((price * quantity).toFixed());
+  if (existingProd) {
+    return false;
+  }
+  price = Number(price);
 
-console.log("Quantity:", quantity, " Price:", price, );
+  price = Number((price * quantity).toFixed(0));
 
-arrLocalStorageProduct.push({id,price,quantity})
-localStorage.setItem("cartProductLS", JSON.stringify(arrLocalStorageProduct))
-    
-}
+  arrLocalStorageProduct.push({ id, quantity, price });
+  localStorage.setItem("cartProductLS", JSON.stringify(arrLocalStorageProduct));
+
+  updateCartValue(arrLocalStorageProduct);
+};
